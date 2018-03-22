@@ -6,7 +6,7 @@ The course is available here: http://cs231n.stanford.edu/syllabus.html
 
 ## Project structure
 
-src/ --folder contains the individual python script files for each problem.
+src/ --folder contains the individual python script files for each problem. (scripts starting with 00_ are tool scripts)
 
 data/ --folder contains the images used as input data
 
