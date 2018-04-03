@@ -14,4 +14,7 @@ data/image_URL/ --folder contains the image URL-s in labeled text files
 
 data/image_gen/ --folder contains the downloaded and resized images
 
-doc/ --folder contains documentation file of the project
+## Source dataset
+
+A labeled dataset of 32x32 images are available in [this link](http://www.cs.toronto.edu/~kriz/cifar.html)
+CIFAR-10 contains 60000 images, in 10 class (6000 per class)
