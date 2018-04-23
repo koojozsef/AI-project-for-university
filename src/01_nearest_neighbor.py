@@ -15,6 +15,7 @@ downloaded batch-es shall be located at "../info/cifar-10-batches-py/" directory
 """
 from PIL import Image
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 #read base images
@@ -74,8 +75,17 @@ nn=NearestNeighbor()
 nn.train(data,labels)
 estimated = nn.predict(data_test[:10])
 real = labels_test[:10]
-print(estimated)
-print(real)
+
+# show the estimated images with labels
+fig=plt.figure(figsize=(16,16))
+for i in range(0, 10):
+    b=data_test[i].reshape(3,32,32).transpose(1,2,0)
+    imgs = Image.fromarray(b)
+    fig.add_subplot(1,10,i+1)
+    plt.imshow(imgs)
+    plt.title("real: " + (str)(real[i]) + "\n est.: " + (str)((int)(estimated[i])))
+plt.show()
+
 
 
 
