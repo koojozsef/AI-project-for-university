@@ -13,3 +13,5 @@ data/ --folder contains the images used as input data
 data/image_URL/ --folder contains the image URL-s in labeled text files
 
 data/image_gen/ --folder contains the downloaded and resized images
+
+doc/ --folder contains documentation file of the project
