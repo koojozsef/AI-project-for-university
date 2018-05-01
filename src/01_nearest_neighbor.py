@@ -40,6 +40,7 @@ a=data[1]#first image :1024 red, 1024 green, 1024 blue
 b=a.reshape(3,32,32).transpose(1,2,0)
 img = Image.fromarray(b)
 img.show()
+
 -------------------------------------------------------------------------------
 """
 
