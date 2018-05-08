@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import numpy as np
+import numpy.random as rnd
+import matplotlib.pyplot as plt
 
 #read base images
 def unpickle(file):
@@ -33,7 +35,7 @@ B - bias vector [K x 1]
 X = data[0]
 K = 10 #There are 10 classes indicated by labels
 D = np.size(X)
-W = np.ones((K,D))
+W = np.random.randint(0,10,(K,D))
 B = np.ones(K)
 
 
@@ -48,7 +50,7 @@ def SVM_Scores(x,W,b):
     
 #use SVM function
 s1=SVM_Scores(X,W,B)
-print(s1)
+#print(s1)
 
 """
 ----------------- SVM function definition -------------
@@ -64,7 +66,7 @@ def SVM_Scores_bias(x,W):
     scores = W.dot(x)
     return scores
 s2=SVM_Scores_bias(X,W)
-print(s2)
+#print(s2)
 
 """
 
@@ -91,7 +93,7 @@ def L_i(x, y, W):
   return loss_i
 
 loss = L_i(X,labels[0],W)
-print (loss) 
+#print (loss) 
     
 
 """
@@ -115,7 +117,7 @@ def L_i_vectorized(x, y, W):
   return loss_i
     
 loss = L_i_vectorized(X,labels[0],W)
-print (loss)    
+#print (loss)    
 
 """
 
@@ -139,10 +141,57 @@ def L(X,y,W,num):
         
     return LOSS #num long array
 
-result=L(data,labels,W,10000)
+Num_of_data=100
+
+result=L(data,labels,W,Num_of_data)
+plt.plot(result[0:100])
+avg_result = result.mean()
+
+"""
+--------------- Optimizations
+"""
+#random opt -- best ideoa
+def opt_rand():
+    bestloss = float("inf") # Python assigns the highest possible float value
     
-    
-    
+    for num in xrange(100):
+        rnd.seed(num)
+        W_l = rnd.randn(10, 3073) * 0.0001 # generate random parameters
+        loss = L(data, labels, W_l, Num_of_data).mean() # get the loss over the entire training set
+        if loss < bestloss: # keep track of the best solution
+            bestloss = loss
+            print(loss)
+            bestW = W_l
+            print 'in attempt %d the loss was %f, best %f' % (num, loss, bestloss)
+
+# gradient evaluation
+def eval_numerical_gradient(f, x):
+  """ 
+  a naive implementation of numerical gradient of f at x 
+  - f should be a function that takes a single argument
+  - x is the point (numpy array) to evaluate the gradient at
+  """ 
+
+  fx = f(x) # evaluate function value at original point
+  grad = np.zeros(x.shape)
+  h = 0.00001
+
+  # iterate over all indexes in x
+  it = np.nditer(x, flags=['multi_index'], op_flags=['readwrite'])
+  while not it.finished:
+
+    # evaluate function at x+h
+    ix = it.multi_index
+    old_value = x[ix]
+    x[ix] = old_value + h # increment by h
+    fxh = f(x) # evalute f(x + h)
+    x[ix] = old_value # restore to previous value (very important!)
+
+    # compute the partial derivative
+    grad[ix] = (fxh - fx) / h # the slope
+    it.iternext() # step to next dimension
+
+  return grad
     
     
     
